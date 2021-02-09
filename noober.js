@@ -1,20 +1,32 @@
 
 function levelOfService(ride) {
   let levelOfService
+
   if (ride.length > 1) {
+
     levelOfService = 'Noober Pool'
+
   } else if (ride[0].purpleRequested) {
+
     levelOfService = 'Noober Purple'
+
   } else if (ride[0].numberOfPassengers > 3) {
+
     levelOfService = 'Noober XL'
+
   } else {
+
     levelOfService = 'Noober X'
+
   }
+
   return levelOfService
 }
 
 function renderRides(ridesArray) {
+
   for (let i = 0; i < ridesArray.length; i++) {
+
     let ride = ridesArray[i]
 
     document.querySelector('.rides').insertAdjacentHTML('beforeend', `
@@ -25,16 +37,23 @@ function renderRides(ridesArray) {
     `)
 
     let borderClass
+
     let backgroundClass
+
     if (levelOfService(ride) == 'Noober Purple') {
+
       borderClass = 'border-purple-500'
       backgroundClass = 'bg-purple-600'
+
     } else {
+
       borderClass = 'border-gray-900'
       backgroundClass = 'bg-gray-600'
+
     }
 
     for (let i = 0; i < ride.length; i++) {
+
       let leg = ride[i]
 
       document.querySelector('.rides').insertAdjacentHTML('beforeend', `
@@ -71,32 +90,43 @@ function renderRides(ridesArray) {
 window.addEventListener('DOMContentLoaded', function() {
 
 
-  let allButtons = document.querySelectorAll('.filter-button')
+  let allbuttons = document.querySelectorAll ('.filter-button')
 
-  for (let i = 0; i < allButtons.length; i++) {
-    let serviceB = allButtons[i];
+  for (let i = 0; i < allbuttons.length; i++) {
+
+    let serviceB = allbuttons[i];
+
     
-    serviceB.addEventListener('click', async function(event) {
+    serviceB.addEventListener ('click', async function(event) {
+
       event.preventDefault()
+
       document.querySelector('.rides').innerHTML = ''
+
 
       let service = event.target.innerHTML
 
-      let response = await fetch(`https://kiei451.com/api/rides.json`)
+      let response = await fetch (`https://kiei451.com/api/rides.json`)
+
       let json = await response.json()
 
-      let newArray = []
+
+      let newarray = []
+
       for (let i = 0; i < json.length; i++) {
+
         let ride = json[i]
+
         if (service == 'All Rides'){
-          newArray.push(ride)
-        } else if (levelOfService(ride) == service){
-          newArray.push(ride)
+
+          newarray.push(ride)
+
+        } else if (levelOfService (ride) == service){
+          
+          newarray.push (ride)
         }
       }
-      renderRides(newArray)
-      console.log(newArray)
-      console.log(newArray.length)
+      renderRides (newarray)
     })
   }
 })
